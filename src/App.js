@@ -1,28 +1,33 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { connect } from 'react-redux';
 import './App.css';
+import { dealCard } from './actions/action';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <pre>
+          {
+              JSON.stringify(this.props)
+          }
+        </pre>
+        <button onClick={() =>this.props.dealCard('card')}>deal card</button>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+    console.log(state.hand);
+    return {...state};
+};
+
+const mapDispatchToProps = dispatch => ({
+    dealCard: card => dispatch(dealCard(card))
+});
+
+/**
+ * Connect React Component to Store with `connect` React binding from `react-redux`
+ */
+export default connect(mapStateToProps, mapDispatchToProps)(App);
